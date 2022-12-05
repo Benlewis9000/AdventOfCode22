@@ -44,19 +44,22 @@ namespace AOC2022
                 SetPart(1);
             }
 
-            public void SetYear(int year)
+            public Builder SetYear(int year)
             {
                 _year = ValidateYear(year);
+                return this;
             }
 
-            public void SetDay(int day)
+            public Builder SetDay(int day)
             {
                 _day = ValidateDay(day);
+                return this;
             }
 
-            public void SetPart(int part)
+            public Builder SetPart(int part)
             {
                 _part = ValidatePart(part);
+                return this;
             }
 
             private int ValidateYear(int year)
