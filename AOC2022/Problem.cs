@@ -1,6 +1,6 @@
 ﻿namespace Aoc.Core;
 
-internal struct Problem : IProblem
+public struct Problem : IProblem
 {
     public int Year { get; }
     public int Day { get; }

@@ -1,10 +1,8 @@
 ﻿namespace Aoc.Core;
 
-internal interface IConfiguration
+public interface IConfiguration
 {
-    public string GetAddress();
-    public string GetCookie();
-    public string GetYear();
-    public string GetDay();
-    public string GetPart();
+    public string BaseAddress { get; }
+    public string SessionId { get; }
+    public IProblem Problem { get; }
 }
