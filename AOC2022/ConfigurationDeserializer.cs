@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using JsonException = System.Text.Json.JsonException;
-using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace Aoc.Core;
 
@@ -13,17 +12,19 @@ public class ConfigurationDeserializer
         _json = json;
     }
 
-    public IConfiguration Deserialize()
+    public bool TryDeserialize(out IConfiguration? config)
     {
+        config = default;
         try
         {
-            return JsonConvert.DeserializeObject<Configuration>(_json);
+            config = JsonConvert.DeserializeObject<Configuration>(_json);
+            return true;
         }
         catch (JsonException)
         {
             Console.WriteLine($"Failed to deserialize {nameof(Configuration)}:" + Environment.NewLine +
                               $"{_json}");
-            throw;
         }
+        return false;
     }
 }

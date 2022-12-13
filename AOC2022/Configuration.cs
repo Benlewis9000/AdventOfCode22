@@ -6,18 +6,15 @@ public class Configuration : IConfiguration
 {
     public string BaseAddress { get; }
     public string SessionId { get; }
+    public string InputsPath { get; }
     public IProblem Problem { get; }
-    
-    private Configuration(string baseAddress, string sessionId, IProblem problem)
+
+    [JsonConstructor]
+    public Configuration(string baseAddress, string sessionId, string inputsPath, Problem problem)
     {
         BaseAddress = baseAddress;
         SessionId = sessionId;
         Problem = problem;
-    }
-
-    [JsonConstructor]
-    private Configuration(string baseAddress, string sessionId, Problem problem) 
-        : this(baseAddress, sessionId, (IProblem) problem)
-    {
+        InputsPath = inputsPath;
     }
 }
