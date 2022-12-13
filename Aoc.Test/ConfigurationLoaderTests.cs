@@ -10,8 +10,8 @@ internal class ConfigurationLoaderTests
     {
         string json =
             "{\r\n  \"sessionId\": \"id\",\r\n  \"baseAddress\": \"https://adventofcode.com/\",\r\n  \"problem\": {\r\n    \"year\": 2015,\r\n    \"day\": 1,\r\n    \"part\": 1\r\n  }\r\n}";
-        var configurationLoader = new ConfigurationDeserializer(json);
-        IConfiguration config = configurationLoader.Deserialize();
+        var deserializer = new ConfigurationDeserializer(json);
+        deserializer.TryDeserialize(out var config);
         DoAssertions(config);
     }
 
@@ -20,7 +20,7 @@ internal class ConfigurationLoaderTests
     {
         string path = @"..\..\..\..\Aoc.Test\config.json";
         var loader = new ConfigurationLoader(path);
-        var config = loader.Load();
+        loader.TryLoad(out var config);
         DoAssertions(config);
     }
 
