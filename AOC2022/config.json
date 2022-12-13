@@ -1,9 +1,0 @@
-﻿{
-  "sessionId": "id",
-  "baseAddress": "https://adventofcode.com/",
-  "problem": {
-    "year": 2015,
-    "day": 1,
-    "part": 1
-  }
-}
