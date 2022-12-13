@@ -1,6 +1,6 @@
 ﻿namespace Aoc.Core.Loaders;
 
-internal class FileLoader : ILoader<string>, IAsyncLoader<string>
+internal class FileLoader : ILoader<string?>
 {
     private readonly string _path;
 
@@ -9,34 +9,33 @@ internal class FileLoader : ILoader<string>, IAsyncLoader<string>
         _path = path;
     }
 
-    public string Load()
+    public bool TryLoad(out string? data)
     {
-        return DoLoad(path => File.ReadAllText(path));
+        return TryDoLoad(File.ReadAllText, out data);
     }
 
-    public Task<string> LoadAsync()
-    {
-        return DoLoad(path => File.ReadAllTextAsync(path));
-    }
+    // Used to reading can optionally be async whilst reusing the rest DoLoad, should such a method be added
+    // (was previously removed)
+    private delegate T ReadFileFunc<out T>(string path);
 
-    // Used to reading can optionally be async whilst reusing the rest DoLoad
-    private delegate TU ReadFileFunc<TU>(string path);
-
-    private TU DoLoad<TU>(ReadFileFunc<TU> read)
+    private bool TryDoLoad<T>(ReadFileFunc<T?> read, out T? data)
     {
+        data = default;
         try
         {
-            return read.Invoke(_path);
+            data = read.Invoke(_path);
+            return true;
         }
         catch (FileNotFoundException)
         {
             Console.WriteLine($"Could not find file at {_path}");
-            throw;
         }
-        catch (IOException)
+        catch (IOException ex)
         {
             Console.WriteLine($"Failed to read file at {_path}");
-            throw;
+            Console.WriteLine(ex);
         }
+
+        return false;
     }
 }

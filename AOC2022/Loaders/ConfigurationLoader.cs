@@ -1,20 +1,31 @@
-﻿using System.Text.Json;
+﻿using System.IO;
+using System.Text.Json;
 
 namespace Aoc.Core.Loaders;
 
-public class ConfigurationLoader : ILoader<IConfiguration>
+public class ConfigurationLoader : ILoader<IConfiguration?>
 {
-    private readonly ConfigurationDeserializer _deserializer;
+    private readonly string _path;
     
     public ConfigurationLoader(string path)
     {
-        ILoader<string> fileLoader = new FileLoader(path);
-        var json = fileLoader.Load();
-        _deserializer = new ConfigurationDeserializer(json);
+        _path = path;
     }
 
-    public IConfiguration Load()
+    public bool TryLoad(out IConfiguration? config)
     {
-        return _deserializer.Deserialize();
+        config = default;
+        ILoader<string?> fileLoader = new FileLoader(_path);
+        if (!fileLoader.TryLoad(out string? json))
+        {
+            return false;
+        }
+        if (json == null)
+        {
+            return false;
+        }
+
+        var deserializer = new ConfigurationDeserializer(json);
+        return deserializer.TryDeserialize(out config);
     }
 }
