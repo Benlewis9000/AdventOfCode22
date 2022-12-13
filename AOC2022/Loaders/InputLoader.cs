@@ -39,14 +39,14 @@ public class InputLoader : ILoader<string?>
         FileLoader fileLoader = new FileLoader(_path);
         if (TryDoLoad(fileLoader, out data))
         {
-            Console.WriteLine("Loaded input from local file");
+            Console.WriteLine("Loaded input from local file.");
             return true;
         }
 
         HttpLoader httpLoader = new HttpLoader(_configuration);
         if (TryDoLoad(httpLoader, out data))
         {
-            Console.WriteLine("Loaded input from web");
+            Console.WriteLine("Loaded input from web.");
             return true;
         }
 

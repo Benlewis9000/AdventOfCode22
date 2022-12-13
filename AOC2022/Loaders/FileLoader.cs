@@ -28,11 +28,11 @@ internal class FileLoader : ILoader<string?>
         }
         catch (FileNotFoundException)
         {
-            Console.WriteLine($"Could not find file at {_path}");
+            Console.WriteLine($"Could not find file at \"{_path}\".");
         }
         catch (IOException ex)
         {
-            Console.WriteLine($"Failed to read file at {_path}");
+            Console.WriteLine($"Failed to read file at \"{_path}\".");
             Console.WriteLine(ex);
         }
 
