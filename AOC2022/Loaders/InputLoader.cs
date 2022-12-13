@@ -2,7 +2,7 @@
 
 namespace Aoc.Core.Loaders;
 
-public class InputLoader : ILoader<string?>
+public class InputLoader : ILoader<string>
 {
     private readonly IConfiguration _configuration;
     private readonly string _path;
@@ -13,17 +13,31 @@ public class InputLoader : ILoader<string?>
         _path = GeneratePath();
     }
 
-    private bool TryDoLoad(ILoader<string?> loader, out string? data)
+    public string Load()
     {
-        data = default;
         try
         {
-            return loader.TryLoad(out data);
+            FileLoader fileLoader = new FileLoader(_path);
+            string data = fileLoader.Load();
+            Console.WriteLine("Loaded input from local file.");
+            return data;
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex);
-            return false;
+            Console.WriteLine($"File \"{_path}\" could not be loaded: {ex.Message}" + Environment.NewLine +
+                              "Attempting web download...");
+        }
+
+        try
+        {
+            HttpLoader httpLoader = new HttpLoader(_configuration);
+            string data = httpLoader.Load();
+            Console.WriteLine("Loaded input from web.");
+            return data;
+        }
+        catch (Exception ex)
+        {
+            throw new InvalidOperationException("Failed to load input from web with provided configuration.", ex);
         }
     }
 
@@ -32,24 +46,5 @@ public class InputLoader : ILoader<string?>
         var problem = _configuration.Problem;
         // e.g. inputs/2015/day_1.txt
         return $"{_configuration.InputsPath}{Path.DirectorySeparatorChar}{problem.Year}{Path.DirectorySeparatorChar}day_{problem.Day}.txt";
-    }
-
-    public bool TryLoad(out string? data)
-    {
-        FileLoader fileLoader = new FileLoader(_path);
-        if (TryDoLoad(fileLoader, out data))
-        {
-            Console.WriteLine("Loaded input from local file.");
-            return true;
-        }
-
-        HttpLoader httpLoader = new HttpLoader(_configuration);
-        if (TryDoLoad(httpLoader, out data))
-        {
-            Console.WriteLine("Loaded input from web.");
-            return true;
-        }
-
-        return false;
     }
 }

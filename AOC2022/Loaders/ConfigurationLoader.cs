@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using Newtonsoft.Json;
+using System.IO;
 using System.Text.Json;
 
 namespace Aoc.Core.Loaders;
@@ -12,20 +13,10 @@ public class ConfigurationLoader : ILoader<IConfiguration?>
         _path = path;
     }
 
-    public bool TryLoad(out IConfiguration? config)
+    public IConfiguration? Load()
     {
-        config = default;
-        ILoader<string?> fileLoader = new FileLoader(_path);
-        if (!fileLoader.TryLoad(out string? json))
-        {
-            return false;
-        }
-        if (json == null)
-        {
-            return false;
-        }
-
-        var deserializer = new ConfigurationDeserializer(json);
-        return deserializer.TryDeserialize(out config);
+        var fileLoader = new FileLoader(_path);
+        string json = fileLoader.Load();
+        return JsonConvert.DeserializeObject<Configuration>(json);
     }
 }

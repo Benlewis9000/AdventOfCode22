@@ -2,5 +2,5 @@
 
 public interface ILoader<T>
 {
-    public bool TryLoad(out T data);
+    public T Load();
 }
