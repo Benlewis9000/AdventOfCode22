@@ -17,8 +17,7 @@ public class InputLoader : ILoader<string>
     {
         try
         {
-            FileLoader fileLoader = new FileLoader(_path);
-            string data = fileLoader.Load();
+            string data = File.ReadAllText(_path);
             Console.WriteLine("Loaded input from local file.");
             return data;
         }

@@ -15,8 +15,7 @@ public class ConfigurationLoader : ILoader<IConfiguration?>
 
     public IConfiguration? Load()
     {
-        var fileLoader = new FileLoader(_path);
-        string json = fileLoader.Load();
+        string json = File.ReadAllText(_path);
         return JsonConvert.DeserializeObject<Configuration>(json);
     }
 }
