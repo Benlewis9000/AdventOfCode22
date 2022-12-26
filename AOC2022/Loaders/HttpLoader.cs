@@ -14,23 +14,20 @@ public class HttpLoader : ILoader<string>
     public string Load()
     {
         IProblem problem = _config.Problem;
-        Uri uri = new Uri($"{_config.BaseAddress}/{problem.Year}/day/{problem.Day}/input");
+        Uri problemInputUri = new Uri($"{_config.BaseAddress}/{problem.Year}/day/{problem.Day}/input");
 
         CookieContainer cookieContainer = new CookieContainer();
-        cookieContainer.Add(uri, new Cookie("session", _config.SessionId));
+        cookieContainer.Add(problemInputUri, new Cookie("session", _config.SessionId));
 
-        return DoLoadAsync(uri, cookieContainer).Result;
+        return DoLoadAsync(problemInputUri, cookieContainer).Result;
     }
 
-
-    // ConfigureAwait(false) prevents deadlock when Result is called on returned Task
-    // https://blog.stephencleary.com/2012/07/dont-block-on-async-code.html
     private async Task<string> DoLoadAsync(Uri uri, CookieContainer cookieContainer)
     {
-        HttpClient client = new HttpClient(new HttpClientHandler { CookieContainer = cookieContainer });
-        HttpResponseMessage response = await client.GetAsync(uri).ConfigureAwait(false);
+        using HttpClient client = new HttpClient(new HttpClientHandler { CookieContainer = cookieContainer });
+        // ConfigureAwait(false) prevents deadlock when Result is called on returned Task
+        using HttpResponseMessage response = await client.GetAsync(uri).ConfigureAwait(false);
         response.EnsureSuccessStatusCode();
-        client.Dispose();
 
         return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
     }
