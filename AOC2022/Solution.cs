@@ -1,16 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Aoc.Core;
 
-namespace AOC2022
-{
-    internal class Solution
-    {
-        /*
-         * Takes in some iterable of string
-         * Outputs some string
-         */
-    }
-}
+public delegate string Solution(string input);

@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Aoc.Core.Loaders;
 
-namespace AOC2022
+namespace Aoc.Core;
+
+public class Solver
 {
-    internal class Solver
+    private readonly Solution _solution;
+
+    private readonly string _input;
+
+    public Solver(string configurationPath, IProblem problem, Solution solution)
     {
-        /*
-         * The link between a problem and a solution
-         * Will take a problem, gather necessary data (indirectly, call some service), feed into solution, output via chosen output
-         */
+        _solution = solution;
+        var configuration = new ConfigurationLoader(configurationPath).Load();
+        _input = new InputLoader(configuration, problem).Load();
+    }
+
+    public string Solve()
+    {
+        return _solution(_input);
     }
 }
