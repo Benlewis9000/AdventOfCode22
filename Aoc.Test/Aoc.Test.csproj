@@ -20,4 +20,13 @@
     <ProjectReference Include="..\AOC2022\Aoc.Core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="test-config.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+	<Content Include="session.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>  
+  </ItemGroup>
+
 </Project>

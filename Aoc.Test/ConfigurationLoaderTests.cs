@@ -18,13 +18,13 @@ internal class ConfigurationLoaderTests
     [Test]
     public void Deserialize_ShouldLoadAndCreateConfigFromFile()
     {
-        string path = @"..\..\..\..\Aoc.Test\config.json";
+        string path = @"test-config.json";
         var loader = new ConfigurationLoader(path);
-        loader.TryLoad(out var config);
+        var config = loader.Load();
         DoAssertions(config);
     }
 
-    private void DoAssertions(IConfiguration config)
+    private void DoAssertions(IConfiguration? config)
     {
         Assert.IsNotNull(config);
         Assert.That(config.SessionId, Is.EqualTo("id"));

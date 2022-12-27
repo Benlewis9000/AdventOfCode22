@@ -3,7 +3,7 @@
   "baseAddress": "https://adventofcode.com/",
   "inputsPath": "inputs",
   "problem": {
-    "year": 2022,
+    "year": 2015,
     "day": 1,
     "part": 1
   }
