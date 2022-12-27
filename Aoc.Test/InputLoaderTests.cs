@@ -19,9 +19,9 @@ internal class InputLoaderTests
         var problem = new Problem(2022, 1, 1);
         var config = new Configuration("https://adventofcode.com", 
             $"{_sessionId}",
-            "inputs", problem);
+            "inputs");
 
-        var inputLoader = new InputLoader(config);
+        var inputLoader = new InputLoader(config, problem);
         var data = inputLoader.Load();
         Console.WriteLine(data);
 

@@ -5,16 +5,17 @@ namespace Aoc.Core.Loaders;
 public class HttpLoader : ILoader<string>
 {
     private readonly IConfiguration _config;
+    private readonly IProblem _problem;
 
-    public HttpLoader(IConfiguration config)
+    public HttpLoader(IConfiguration config, IProblem problem)
     {
         _config = config;
+        _problem = problem;
     }
 
     public string Load()
     {
-        IProblem problem = _config.Problem;
-        Uri problemInputUri = new Uri($"{_config.BaseAddress}/{problem.Year}/day/{problem.Day}/input");
+        Uri problemInputUri = new Uri($"{_config.BaseAddress}/{_problem.Year}/day/{_problem.Day}/input");
 
         CookieContainer cookieContainer = new CookieContainer();
         cookieContainer.Add(problemInputUri, new Cookie("session", _config.SessionId));

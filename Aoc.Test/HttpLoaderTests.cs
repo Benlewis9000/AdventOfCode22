@@ -19,9 +19,10 @@ internal class HttpLoaderTests
     {
         string json =
            $"{{\r\n  \"sessionId\": \"{_sessionId}\",\r\n  " +
-           "\"baseAddress\": \"https://adventofcode.com\",\r\n  \"problem\": {\r\n    \"year\": 2017,\r\n    \"day\": 1,\r\n    \"part\": 1\r\n  }\r\n}";
+           "\"baseAddress\": \"https://adventofcode.com\"\r\n}";
         new ConfigurationDeserializer(json).TryDeserialize(out var config);
-        var loader = new HttpLoader(config);
+        var problem = new Problem(2017, 1, 1);
+        var loader = new HttpLoader(config, problem);
         var data = loader.Load();
         Console.WriteLine(data);
     }

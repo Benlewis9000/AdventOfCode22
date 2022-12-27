@@ -9,7 +9,7 @@ internal class ConfigurationLoaderTests
     public void Deserialize_ShouldCreateConfigInstance()
     {
         string json =
-            "{\r\n  \"sessionId\": \"id\",\r\n  \"baseAddress\": \"https://adventofcode.com/\",\r\n  \"problem\": {\r\n    \"year\": 2015,\r\n    \"day\": 1,\r\n    \"part\": 1\r\n  }\r\n}";
+            "{\r\n  \"sessionId\": \"id\",\r\n  \"baseAddress\": \"https://adventofcode.com/\"\r\n}";
         var deserializer = new ConfigurationDeserializer(json);
         deserializer.TryDeserialize(out var config);
         DoAssertions(config);
@@ -28,6 +28,5 @@ internal class ConfigurationLoaderTests
     {
         Assert.IsNotNull(config);
         Assert.That(config.SessionId, Is.EqualTo("id"));
-        Assert.That(config.Problem.Year, Is.EqualTo(2015));
     }
 }

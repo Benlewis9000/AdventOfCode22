@@ -5,11 +5,13 @@ namespace Aoc.Core.Loaders;
 public class InputLoader : ILoader<string>
 {
     private readonly IConfiguration _configuration;
+    private readonly IProblem _problem;
     private readonly string _path;
 
-    public InputLoader(IConfiguration configuration)
+    public InputLoader(IConfiguration configuration, IProblem problem)
     {
         _configuration = configuration;
+        _problem = problem;
         _path = GeneratePath();
     }
 
@@ -34,7 +36,7 @@ public class InputLoader : ILoader<string>
 
         try
         {
-            HttpLoader httpLoader = new HttpLoader(_configuration);
+            HttpLoader httpLoader = new HttpLoader(_configuration, _problem);
             string data = httpLoader.Load();
             Console.WriteLine("Loaded input from web.");
             return data;
@@ -51,7 +53,6 @@ public class InputLoader : ILoader<string>
     /// <returns></returns>
     private string GeneratePath()
     {
-        var problem = _configuration.Problem;
-        return $"{_configuration.InputsPath}{Path.DirectorySeparatorChar}{problem.Year}{Path.DirectorySeparatorChar}day_{problem.Day}.txt";
+        return $"{_configuration.InputsPath}{Path.DirectorySeparatorChar}{_problem.Year}{Path.DirectorySeparatorChar}day_{_problem.Day}.txt";
     }
 }
