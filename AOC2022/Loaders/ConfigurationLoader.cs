@@ -2,7 +2,7 @@
 
 namespace Aoc.Core.Loaders;
 
-public class ConfigurationLoader : ILoader<IConfiguration?>
+public class ConfigurationLoader : ILoader<IConfiguration>
 {
     private const string cDefaultPath = @"config.json";
     private readonly string _path;
@@ -16,9 +16,15 @@ public class ConfigurationLoader : ILoader<IConfiguration?>
         _path = path;
     }
 
-    public IConfiguration? Load()
+    public IConfiguration Load()
     {
+        if (!File.Exists(_path))
+        {
+            throw new FileNotFoundException($"Could not find file configuration file at \"{_path}\".");
+        }
         string json = File.ReadAllText(_path);
-        return JsonConvert.DeserializeObject<Configuration>(json);
+        return JsonConvert.DeserializeObject<Configuration>(json) ??
+               throw new InvalidOperationException(
+                   $"Failed to deserialize json to {nameof(Configuration)}:{Environment.NewLine}\"{json}\"");
     }
 }
