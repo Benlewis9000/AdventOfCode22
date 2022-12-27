@@ -5,7 +5,7 @@ VisualStudioVersion = 17.3.32922.545
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aoc.Core", "AOC2022\Aoc.Core.csproj", "{F0176B12-DF18-482B-A24C-254CDA2C509F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aoc.Test", "Aoc.Test\Aoc.Test.csproj", "{A84D4FB4-D0BB-4F3F-BCBD-0C19AB766E89}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aoc.Test", "Aoc.Test\Aoc.Test.csproj", "{A84D4FB4-D0BB-4F3F-BCBD-0C19AB766E89}"
 	ProjectSection(ProjectDependencies) = postProject
 		{F0176B12-DF18-482B-A24C-254CDA2C509F} = {F0176B12-DF18-482B-A24C-254CDA2C509F}
 	EndProjectSection
