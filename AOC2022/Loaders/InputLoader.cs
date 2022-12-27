@@ -15,6 +15,11 @@ public class InputLoader : ILoader<string>
 
     public string Load()
     {
+        if (!File.Exists(_path))
+        {
+            throw new FileNotFoundException($"Could not find configuration file at\"{_path}\".");
+        }
+
         try
         {
             string data = File.ReadAllText(_path);
@@ -36,14 +41,17 @@ public class InputLoader : ILoader<string>
         }
         catch (Exception ex)
         {
-            throw new InvalidOperationException("Failed to load input from web with provided configuration.", ex);
+            throw new InvalidOperationException("Failed to load problem input from file and web with provided configuration.", ex);
         }
     }
 
+    /// <summary>
+    /// Generate path of form dir/year/day_n.txt, e.g. inputs/2015/day_1.txt
+    /// </summary>
+    /// <returns></returns>
     private string GeneratePath()
     {
         var problem = _configuration.Problem;
-        // e.g. inputs/2015/day_1.txt
         return $"{_configuration.InputsPath}{Path.DirectorySeparatorChar}{problem.Year}{Path.DirectorySeparatorChar}day_{problem.Day}.txt";
     }
 }
